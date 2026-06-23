@@ -1,3 +1,4 @@
+<img width="1024" height="1024" alt="logo" src="https://github.com/user-attachments/assets/79a6c2d7-6393-4702-88fb-d385aa14c2b8" />
 devpick.fun
 
 Pick your devs. Watch their launches the moment they hit the chain.
