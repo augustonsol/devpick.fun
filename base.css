@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    /* crimson anime theme — accent replaces the old off-white */
+    --accent-color: #ff3052;
+    --accent-shadow: rgba(224, 27, 60, 0.35);
+
+    /* backgrounds */
+    --bg-primary: #0b0709;
+    --bg-secondary: #150e10;
+    --bg-tertiary: #1c1216;
+
+    /* borders */
+    --border-primary: rgba(255, 255, 255, 0.08);
+    --border-secondary: rgba(255, 255, 255, 0.05);
+    --border-accent: rgba(224, 27, 60, 0.45);
+
+    /* text */
+    --text-primary: #f3edef;
+    --text-secondary: #c9bcc0;
+    --text-muted: #a89ba0;
+    --text-dim: #6e6266;
+
+    /* semantic states (kept) */
+    --success: #3ddc84;
+    --error: #ff6666;
+    --warning: #ffaa66;
+    --info: #ff3052;
+
+    /* fonts */
+    --font-ui: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Monaco, 'Roboto Mono', Consolas, monospace;
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+}
+
+/* ambient crimson atmosphere */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(800px 500px at 85% -10%, rgba(224,27,60,.14), transparent 60%),
+        radial-gradient(600px 600px at -10% 20%, rgba(140,18,38,.10), transparent 55%);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555555;
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+
+/* Pulse Animation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+/* Glow Animation */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--accent-shadow);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--accent-shadow);
+    }
+}
+
+/* Flash Animation */
+@keyframes flash {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Sync Pulse Animation */
+@keyframes syncPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(102, 255, 102, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(102, 255, 102, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(102, 255, 102, 0);
+    }
+}
+
+/* Graduated Pulse Animation */
+@keyframes graduatedPulse {
+    0% { opacity: 0.9; }
+    50% { opacity: 1; }
+    100% { opacity: 0.9; }
+}
+
+/* Slide In Animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   Typography Classes
+   ============================================ */
+
+.text-mono {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+.text-small {
+    font-size: 11px;
+}
+
+.text-tiny {
+    font-size: 9px;
+}
+
+.text-large {
+    font-size: 16px;
+}
+
+.text-bold {
+    font-weight: 600;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-dim {
+    color: var(--text-dim);
+}
+
+.text-success {
+    color: var(--success);
+}
+
+.text-error {
+    color: var(--error);
+}
+
+.text-warning {
+    color: var(--warning);
+}
+
+.text-info {
+    color: var(--info);
+}
+
+/* ============================================
+   Link Styles
+   ============================================ */
+
+a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+a:hover {
+    color: var(--text-primary);
+    text-shadow: 0 0 10px var(--accent-shadow);
+}
+
+/* ============================================
+   Selection
+   ============================================ */
+
+::selection {
+    background: var(--accent-color);
+    color: var(--bg-primary);
+}
+
+::-moz-selection {
+    background: var(--accent-color);
+    color: var(--bg-primary);
+}
+
+/* ============================================
+   Focus States
+   ============================================ */
+
+:focus {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   Transitions
+   ============================================ */
+
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+.transition-fast {
+    transition: all 0.15s ease;
+}
+
+.transition-slow {
+    transition: all 0.5s ease;
+}
+
+/* ============================================
+   Empty States
+   ============================================ */
+
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-muted);
+}
+
+.empty-state h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    font-family: monospace;
+}
+
+.empty-state p {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: monospace;
+}
+
+.empty-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.empty-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    font-family: monospace;
+}
+
+.empty-subtext {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: monospace;
+}

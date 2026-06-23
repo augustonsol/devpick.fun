@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Devs - devpick.fun</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" type="image/png" href="logo.png">
+    
+    <!-- Modular CSS Files -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/utilities.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo" onclick="window.location.href='index.html'">
+                <div class="logo-icon"></div>
+                <span>devpick.fun</span>
+            </div>
+            <button class="back-btn" onclick="window.location.href='index.html'">
+                ← Back to Dashboard
+            </button>
+            <div class="coming-soon-section">
+                <button class="nav-link disabled" disabled title="Coming soon for holders of $DPICK">
+                    🎯 Sniper
+                    <span class="coming-soon-badge">Soon</span>
+                </button>
+                <button class="nav-link disabled" disabled title="Coming soon for holders of $DPICK">
+                    📊 Trader
+                    <span class="coming-soon-badge">Soon</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <a href="https://x.com/augustsolq" target="_blank" class="social-link">
+                <span class="social-icon">𝕏</span> Twitter
+            </a>
+            <a href="https://github.com/augustonsol/devpick.fun" target="_blank" class="social-link">
+                <span class="social-icon">⚡</span> GitHub
+            </a>
+            <div class="ca-display">
+                <span class="ca-label">CA:</span>
+                <span class="ca-address ca-value" onclick="copyToClipboard(this.textContent, this)">xxxpump</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="page-title">
+            <div class="page-title-icon"></div>
+            Manage Your Devs
+        </div>
+
+        <!-- Tools Section -->
+        <div class="tools-section">
+            <button class="tool-btn" onclick="exportDevs()">📤 Export Devs</button>
+            <button class="tool-btn" onclick="document.getElementById('importFile').click()">📥 Import Devs</button>
+            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importDevs(event)">
+            <button class="tool-btn" onclick="toggleDebug()">🔧 Debug</button>
+            <button class="tool-btn" onclick="syncAllDevs()">🔄 Sync All</button>
+            <button class="tool-btn" onclick="exportSettings()">💾 Export Full Setup</button>
+            <button class="tool-btn" onclick="document.getElementById('importSettingsFile').click()">📂 Import Full Setup</button>
+            <input type="file" id="importSettingsFile" style="display: none;" accept=".json" onchange="importSettings(event)">
+            <button class="tool-btn" onclick="clearAllDevs()">🗑️ Clear All</button>
+        </div>
+
+        <!-- Add Dev Section -->
+        <div class="add-dev-section">
+            <div class="status-message" id="statusMessage"></div>
+            <div class="section-title">➕ Add New Dev</div>
+            <div class="input-group">
+                <input type="text" class="input-field" id="devName" placeholder="Dev Name (e.g., John Doe)">
+                <input type="text" class="input-field" id="devAddress" placeholder="Wallet Address">
+                <button class="add-btn" id="addBtn" onclick="addDev()">Add Dev</button>
+            </div>
+            <div class="input-group" style="margin-top: 10px;">
+                <textarea class="input-field" id="devNotes" placeholder="Notes on dev (e.g., Past projects: $XYZ - 300k ath, pumped slowly, $ZXC - 10k, nuked instantly)" style="width: 100%; height: 60px; resize: vertical;"></textarea>
+            </div>
+            
+            <!-- Past Projects Section -->
+            <div class="past-projects-section" style="margin-top: 15px;">
+                <div class="section-subtitle">📁 Past Projects (Optional)</div>
+                <div id="pastProjectsContainer">
+                    <div class="project-input-row">
+                        <input type="text" class="project-field" placeholder="Name" data-field="name">
+                        <input type="text" class="project-field" placeholder="Symbol" data-field="symbol">
+                        <input type="text" class="project-field" placeholder="ATH (e.g., 500K)" data-field="ath">
+                        <input type="text" class="project-field" placeholder="Chart URL or CA" data-field="chart">
+                    </div>
+                </div>
+                <button class="add-project-btn" onclick="addProjectRow()">+ Add Another Project</button>
+            </div>
+        </div>
+
+        <!-- Devs Grid -->
+        <div class="section-title">📊 Your Followed Devs (<span id="devCount">0</span>)</div>
+        <div class="devs-grid" id="devsGrid">
+            <!-- Dev cards will be dynamically inserted here -->
+        </div>
+        
+        <!-- Empty State (initially hidden, shown by JavaScript when no devs) -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-icon">👥</div>
+            <div class="empty-text">No devs added yet</div>
+            <div class="empty-subtext">Start by adding developers you want to follow above</div>
+        </div>
+    </div>
+
+    <!-- Debug Panel -->
+    <div class="debug-panel" id="debugPanel">
+        <div class="debug-header">
+            <strong>Debug Console</strong>
+            <button onclick="clearDebug()">Clear</button>
+            <button onclick="toggleDebug()">×</button>
+        </div>
+        <div id="debugOutput"></div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="bottom-controls">
+        <div class="bottom-left">
+            <a href="https://x.com/augustsolq" target="_blank" class="footer-link">
+                <span>𝕏</span> @augustsolq
+            </a>
+            <a href="https://github.com/augustonsol/devpick.fun" target="_blank" class="footer-link">
+                <span>⚡</span> GitHub
+            </a>
+            <span class="footer-ca">
+                CA: <span class="ca-copy ca-value" onclick="copyToClipboard(this.textContent, this)">xxxpump</span>
+            </span>
+        </div>
+
+        <div class="bottom-right">
+            <div class="bottom-stat">
+                <span>Total Devs: <span id="totalDevs" class="stat-value">0</span></span>
+            </div>
+            <div class="bottom-stat">
+                <span>Synced: <span id="syncedDevs" class="stat-value-green">0</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modular JavaScript Files -->
+    <script src="js/config.js"></script>
+    <script src="js/websocket.js"></script>
+    <script src="js/devManager.js"></script>
+    <script src="js/tokenTracker.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+</html>
