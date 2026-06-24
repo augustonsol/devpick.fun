@@ -1,4 +1,3 @@
-CA: 5vwZRoXvsMiHzgmfeusvEH3uWPJvAYCtFZ86KS8upump
 
 <img width="500" height="500" alt="logo" src="https://github.com/user-attachments/assets/79a6c2d7-6393-4702-88fb-d385aa14c2b8" />
 devpick.fun
